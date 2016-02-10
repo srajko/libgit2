@@ -187,7 +187,7 @@ static bool checkout_is_workdir_modified(
 		else if ((sm_oid = git_submodule_wd_id(sm)) == NULL)
 			rval = false;
 		else
-			rval = (git_oid__cmp(&baseitem->id, sm_oid) != 0);
+			rval = false; // (git_oid__cmp(&baseitem->id, sm_oid) != 0);
 
 		git_submodule_free(sm);
 		return rval;
