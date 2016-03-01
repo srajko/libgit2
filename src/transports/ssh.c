@@ -833,6 +833,24 @@ int git_smart_subtransport_ssh(
 #endif
 }
 
+int git_ssh_global_init() {
+#ifdef GIT_SSH
+	int error = libssh2_init();
+
+	git__on_shutdown(git_ssh_global_shutdown);
+
+	return error;
+#else
+	return 0;
+#endif
+}
+
+void git_ssh_global_shutdown() {
+#ifdef GIT_SSH
+	libssh2_exit();
+#endif
+}
+
 int git_transport_ssh_with_paths(git_transport **out, git_remote *owner, void *payload)
 {
 #ifdef GIT_SSH
